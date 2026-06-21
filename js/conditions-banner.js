@@ -8,6 +8,7 @@
   /* --- compass needle --- */
   var needle = document.getElementById('ag-needle');
   var currentRot = 0, targetRot = 0;
+  var lastUpdatedMs = null;
   function easeNeedle(){
     currentRot += (targetRot - currentRot) * 0.06;
     if(needle) needle.style.transform = 'rotate('+currentRot.toFixed(2)+'deg)';
@@ -15,10 +16,24 @@
   }
   easeNeedle();
 
-  /* --- clock --- */
+  /* --- relative "updated X ago" --- */
+  function relTime(ms){
+    if(ms==null) return 'connecting…';
+    var s=Math.max(0,Math.floor((Date.now()-ms)/1000));
+    if(s<5)  return 'updated just now';
+    if(s<60) return 'updated '+s+' second'+(s===1?'':'s')+' ago';
+    var m=Math.floor(s/60);
+    if(m<60) return 'updated '+m+' minute'+(m===1?'':'s')+' ago';
+    var h=Math.floor(m/60);
+    return 'updated '+h+' hour'+(h===1?'':'s')+' ago';
+  }
+
+  /* --- clock + freshness stamp --- */
   function tick(){
     var el = document.getElementById('ag-clock');
     if(el) el.textContent = new Date().toLocaleTimeString('en-GB');
+    var st = document.getElementById('ag-stamp');
+    if(st) st.textContent = relTime(lastUpdatedMs);
   }
   tick(); setInterval(tick, 1000);
 
@@ -87,8 +102,8 @@
       sg.innerHTML='<b>'+(d.sky.suggestion_label||'Tonight')+' \u2014</b> '+d.sky.suggestion;
     }
 
-    /* stamp */
-    set('ag-stamp', 'data '+new Date(d.updated).toLocaleTimeString('en-GB'));
+    /* freshness — drives the ticking "updated X ago" in tick() */
+    lastUpdatedMs = new Date(d.updated).getTime();
 
     /* home-page strip (only present on index.html) */
     set('ag-h-temp', d.weather.temp_c+'°C');
