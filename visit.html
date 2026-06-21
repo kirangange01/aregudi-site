@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Visit / Apply — Aré Guḍi</title>
+  <meta name="description" content="Visit Aré Guḍi by approval — a request, not a booking. 5-night minimum, an immersion in a working Western Ghats farm." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://unpkg.com/@phosphor-icons/web" defer></script>
+</head>
+<body>
+
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="index.html"><b>Aré Guḍi</b><span class="kn">ಅರೆ ಗುಡಿ</span></a>
+      <button class="nav-toggle" aria-expanded="false" aria-label="Menu">Menu</button>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="farm.html">The Farm</a>
+        <a href="tech.html">Live Data</a>
+        <a href="innovators.html">For Innovators</a>
+        <a href="visit.html" aria-current="page">Visit</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero-full" data-parallax="0.1">
+    <div class="bg"><img src="images/avenue-walking.jpg" alt="An avenue of areca palms in the Western Ghats at Aré Guḍi" /></div>
+    <div class="wrap on-dark">
+      <span class="eyebrow reveal in">Visit / Apply</span>
+      <h1 class="reveal in">Visit <em>Aré Guḍi</em>.</h1>
+      <p class="lead reveal in">By approval — a request, not a booking. A working farm and a living lab, not a resort. Visits are vetted individually and run on a <strong>5-night minimum</strong>, so there's real time to engage with the place.</p>
+    </div>
+  </section>
+
+  <!-- TWO PATHS -->
+  <section>
+    <div class="wrap">
+      <div class="reveal" style="margin-bottom:2.6rem; max-width:40ch;">
+        <span class="section-num">i.</span>
+        <span class="eyebrow plain" style="margin-top:1rem; display:block;">Two paths</span>
+        <h2>Which one are you?</h2>
+      </div>
+      <div class="cols-2 even">
+        <div class="card reveal">
+          <h3>Coming on your own</h3>
+          <p style="margin-top:.6rem;">Request a visit below — by approval, 5-night minimum.</p>
+        </div>
+        <div class="card reveal d1">
+          <h3>Bringing a venture or cohort</h3>
+          <p style="margin-top:.6rem;">Go through the Farm Accelerator, run by Global Launch Base.</p>
+          <div class="btn-row"><a class="btn btn-ghost" href="https://globallaunchbase.com">Apply via GLB</a></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT TO EXPECT -->
+  <section class="band">
+    <div class="wrap cols-2 even" style="align-items:center;">
+      <figure class="figure bare reveal" data-parallax="0.06" style="height:clamp(360px,48vw,560px);">
+        <img src="images/banana-leaf-meal.jpg" alt="A meal served on a banana leaf from the farmhouse kitchen" />
+      </figure>
+      <div class="reveal d1 stack">
+        <span class="section-num">ii.</span>
+        <span class="eyebrow plain" style="margin-top:1rem; display:block;">What to expect</span>
+        <h2>An immersion, not a <em>tourist stay</em>.</h2>
+        <p class="body-lead">The eco-built farmhouse is your base — comfortable and productive, in the middle of the Western Ghats. Days are spent in the plantation, the forest, and the working systems.</p>
+        <ul class="flist" style="margin-top:.6rem;">
+          <li><i class="ph ph-bed ico"></i><span class="t">Clean, modern rooms and bathrooms</span></li>
+          <li><i class="ph ph-sun ico"></i><span class="t">Reliable solar power and hot water</span></li>
+          <li><i class="ph ph-wifi-high ico"></i><span class="t">Working internet</span></li>
+          <li><i class="ph ph-bowl-food ico"></i><span class="t">Meals from the farm's own kitchen</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO -->
+  <section>
+    <div class="wrap narrow reveal" style="text-align:center;">
+      <span class="eyebrow" style="justify-content:center;">Who we say yes to</span>
+      <p class="pull" style="margin-inline:auto;">Founders, researchers, builders, and serious students of regenerative and high-tech farming — <em>people with a reason to be here</em>.</p>
+    </div>
+  </section>
+
+  <!-- REQUEST FORM -->
+  <section class="band">
+    <div class="wrap" style="max-width:680px;">
+      <div class="reveal">
+        <span class="section-num">iii.</span>
+        <span class="eyebrow plain" style="margin-top:1rem; display:block;">Request a visit</span>
+        <h2>Tell us why.</h2>
+        <p class="note" style="margin:1rem 0 2.2rem;">Every request is reviewed personally. We reply by email — there's no instant booking.</p>
+      </div>
+
+      <!-- Netlify Forms: submissions land in your Netlify dashboard + email notification.
+           No backend, no cost. Manual approval by design. -->
+      <form name="visit-request" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="reveal">
+        <input type="hidden" name="form-name" value="visit-request" />
+        <p style="display:none;"><label>Leave blank: <input name="bot-field" /></label></p>
+
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" type="text" required />
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" required />
+        </div>
+        <div class="field">
+          <label for="who">What you do / your venture</label>
+          <input id="who" name="who" type="text" />
+        </div>
+        <div class="field">
+          <label for="why">Why Aré Guḍi</label>
+          <textarea id="why" name="why" rows="3"></textarea>
+        </div>
+        <div class="field">
+          <label for="dates">Rough dates & length of stay (5-night minimum)</label>
+          <input id="dates" name="dates" type="text" placeholder="e.g. mid-November, 6 nights" />
+        </div>
+        <div class="field">
+          <label for="validate">Anything you'd want to validate or learn</label>
+          <textarea id="validate" name="validate" rows="3"></textarea>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" type="submit">Send request</button>
+        </div>
+      </form>
+    </div>
+  </section>
+
+  <!-- GETTING HERE -->
+  <section>
+    <div class="wrap cols-2">
+      <div class="reveal">
+        <span class="section-num">iv.</span>
+        <span class="eyebrow plain" style="margin-top:1rem; display:block;">Getting here</span>
+        <h2>Western Ghats, Karnataka.</h2>
+      </div>
+      <div class="reveal d1 stack">
+        <p class="body-lead">In the Western Ghats of Karnataka — remote, but reachable. Full directions are shared on approval.</p>
+        <p class="body-lead"><strong>Contact:</strong> <a href="mailto:kirangange@gmail.com" style="border-bottom:1px solid var(--line);">kirangange@gmail.com</a></p>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <a class="brand" href="index.html"><b>Aré Guḍi</b><span class="kn">ಅರೆ ಗುಡಿ</span></a>
+          <p style="margin-top:1.2rem; max-width:34ch;">A traditional farm wired for the future — the Western Ghats, Karnataka.</p>
+        </div>
+        <div>
+          <span class="eyebrow plain">Explore</span>
+          <div class="fcol">
+            <a href="farm.html">The Farm</a>
+            <a href="tech.html">Live Data / The Tech</a>
+            <a href="innovators.html">For Innovators</a>
+            <a href="visit.html">Visit / Apply</a>
+          </div>
+        </div>
+        <div>
+          <span class="eyebrow plain">Connect</span>
+          <div class="fcol">
+            <a href="mailto:kirangange@gmail.com">kirangange@gmail.com</a>
+            <a href="https://kirangange.com">kirangange.com</a>
+            <a href="https://globallaunchbase.com">Global Launch Base</a>
+          </div>
+        </div>
+      </div>
+      <small>© <span data-year>2026</span> Aré Guḍi Farms · Western Ghats, Karnataka, India · High-tech powered. Tradition rooted.</small>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+  <script src="js/site.js"></script>
+</body>
+</html>

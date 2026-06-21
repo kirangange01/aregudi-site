@@ -1,0 +1,222 @@
+/* =====================================================================
+   Aré Guḍi · immersive home — dusk stylesheet
+   Off-system "dusk variant": deep charcoal-brown night, warm peach /
+   terracotta light. Type system unchanged: Cormorant (display),
+   Noto Sans (+Kannada), IBM Plex Mono for data and eyebrows.
+   ===================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Noto+Sans:wght@300;400;500;600&family=Noto+Sans+Kannada:wght@300;400;500&family=IBM+Plex+Mono:wght@400;500&display=swap');
+/* alternate faces offered via Tweaks (review only — trim unused before deploy) */
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400&family=Playfair+Display:ital,wght@0,400;0,500;1,400&family=Spectral:ital,wght@0,300;0,400;1,300&family=Work+Sans:wght@300;400;500;600&family=Source+Sans+3:wght@300;400;500;600&display=swap');
+
+:root{
+  --night:      #150e08;
+  --night-2:    #211710;
+  --panel:      #241910;
+  --peach:      #f2cdac;
+  --peach-dim:  rgba(242,205,172,.62);
+  --peach-faint:rgba(242,205,172,.34);
+  --terracotta: #d98a5e;
+  --line:       rgba(242,205,172,.16);
+  --line-soft:  rgba(242,205,172,.09);
+
+  --display:'Cormorant Garamond',Georgia,serif;
+  --body:Georgia,'Noto Sans Kannada','Times New Roman',serif;
+  --kannada:'Noto Sans Kannada',sans-serif;
+  --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+
+  --pad:clamp(22px,5.5vw,84px);
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+html{ -webkit-text-size-adjust:100%; }
+body{
+  background:var(--night); color:var(--peach);
+  font-family:var(--body); font-size:17px; line-height:1.75; font-weight:300;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+img{ max-width:100%; display:block; }
+a{ color:var(--peach); text-decoration:none; }
+::selection{ background:var(--peach); color:var(--night); }
+
+/* ------------------------------ canvas ------------------------------ */
+#grove-canvas{
+  position:fixed; inset:0; width:100%; height:100%; z-index:0; display:block;
+}
+.vignette{
+  position:fixed; inset:0; z-index:1; pointer-events:none;
+  background:radial-gradient(ellipse 120% 90% at 50% 42%, transparent 55%, rgba(10,6,3,.55) 100%);
+}
+.fallback-bg{ display:none; }
+.no-3d #grove-canvas{ display:none; }
+.no-3d .fallback-bg{
+  display:block; position:fixed; inset:0; z-index:0;
+}
+.no-3d .fallback-bg img{ width:100%; height:100%; object-fit:cover; filter:brightness(.38) saturate(.8); }
+
+main{ position:relative; z-index:2; }
+
+/* ------------------------------ header ------------------------------ */
+.ihead{
+  position:fixed; top:0; left:0; right:0; z-index:10;
+  background:rgba(21,14,8,.5); backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line-soft);
+}
+.ihead .wrap{
+  max-width:1320px; margin:0 auto; padding:0 var(--pad);
+  height:64px; display:flex; align-items:center; justify-content:space-between; gap:24px;
+}
+.brand{ display:flex; align-items:baseline; gap:12px; }
+.brand b{ font-family:var(--display); font-weight:400; font-size:1.35rem; letter-spacing:.02em; }
+.brand .kn{ font-family:var(--kannada); font-size:.8rem; color:var(--peach-dim); }
+.ihead nav{ display:flex; gap:clamp(14px,2.4vw,32px); }
+.ihead nav a{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.08em; text-transform:lowercase;
+  color:var(--peach-dim); transition:color .16s ease, opacity .16s ease;
+}
+.ihead nav a:hover{ color:var(--peach); }
+.ihead nav a[aria-current]{ color:var(--terracotta); }
+
+/* ------------------------------- hero ------------------------------- */
+.ihero{
+  min-height:100vh; display:flex; align-items:flex-end;
+  padding:0 var(--pad) clamp(56px,10vh,120px);
+}
+.hero-inner{ max-width:1320px; margin:0 auto; width:100%; }
+.eyebrow{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--terracotta); display:block; margin-bottom:1.6rem;
+}
+.ihero h1{
+  font-family:var(--display); font-weight:300; line-height:.96;
+  font-size:clamp(4.2rem,12.5vw,10.5rem); letter-spacing:-.01em;
+}
+.ihero .kn-big{
+  font-family:var(--kannada); font-weight:300; color:var(--peach-dim);
+  font-size:clamp(1.3rem,3vw,2.2rem); margin-top:.7rem; display:block;
+}
+.ihero .lede{
+  max-width:46ch; margin-top:2rem; font-size:clamp(1rem,1.4vw,1.2rem);
+  color:var(--peach-dim); text-wrap:pretty;
+}
+.scroll-cue{
+  font-family:var(--mono); font-size:.7rem; letter-spacing:.1em; color:var(--peach-faint);
+  margin-top:3rem; display:inline-flex; align-items:center; gap:10px;
+}
+.scroll-cue::after{ content:'↓'; animation:cue 2.4s ease-in-out infinite; }
+@keyframes cue{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(6px); } }
+@media (prefers-reduced-motion: reduce){ .scroll-cue::after{ animation:none; } }
+
+/* hero entrance — CSS-only so it works even if scripts fail */
+@keyframes heroRise{ from{ opacity:0; transform:translateY(46px); } to{ opacity:1; transform:translateY(0); } }
+@media (prefers-reduced-motion: no-preference){
+  .ihero .rise{ animation:heroRise 1.25s cubic-bezier(.2,.7,.2,1) both; }
+  .ihero .rise:nth-child(1){ animation-delay:.15s; }
+  .ihero .rise:nth-child(2){ animation-delay:.28s; }
+  .ihero .rise:nth-child(3){ animation-delay:.41s; }
+  .ihero .rise:nth-child(4){ animation-delay:.54s; }
+  .ihero .rise:nth-child(5){ animation-delay:.67s; }
+}
+
+/* ------------------------------ journey ----------------------------- */
+.journey{ position:relative; }
+.moment{
+  height:110vh; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:0 var(--pad);
+}
+.m-inner{ max-width:760px; }
+.m-inner h3{
+  font-family:var(--display); font-weight:300; font-style:italic;
+  font-size:clamp(2.4rem,6vw,4.8rem); line-height:1.05; letter-spacing:-.01em;
+}
+.m-inner p{
+  margin-top:1.2rem; color:var(--peach-dim); font-size:clamp(.95rem,1.3vw,1.1rem);
+}
+.m-inner .m-meta{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--terracotta); display:block; margin-bottom:1.3rem;
+}
+
+/* ----------------------------- showcase ----------------------------- */
+.showcase{ overflow:hidden; }
+.s-head{
+  padding:clamp(60px,12vh,130px) var(--pad) clamp(28px,5vh,52px);
+  max-width:1320px; margin:0 auto; width:100%;
+}
+.s-head h2{
+  font-family:var(--display); font-weight:300; font-size:clamp(2.4rem,5vw,4.2rem);
+  line-height:1.05;
+}
+.track{
+  display:flex; gap:clamp(20px,2.6vw,36px); align-items:stretch;
+  padding:0 var(--pad) clamp(60px,12vh,120px); width:max-content; will-change:transform;
+}
+.fcard{
+  width:clamp(290px,30vw,420px); flex:none;
+  background:var(--panel); border:1px solid var(--line); border-radius:8px;
+  overflow:hidden; display:flex; flex-direction:column;
+}
+.fcard .ph{ aspect-ratio:3/2; overflow:hidden; border-bottom:1px solid var(--line-soft); }
+.fcard .ph img{ width:100%; height:100%; object-fit:cover; filter:brightness(.82) saturate(.92); }
+.fcard .tx{ padding:clamp(18px,2vw,28px); display:flex; flex-direction:column; gap:.65rem; flex:1; }
+.fcard .num{
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.12em; color:var(--terracotta);
+}
+.fcard h3{
+  font-family:var(--display); font-weight:400; font-size:1.7rem; line-height:1.1;
+}
+.fcard p{ font-size:.92rem; color:var(--peach-dim); }
+.fcard .meta{
+  margin-top:auto; padding-top:1rem; border-top:1px solid var(--line-soft);
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.06em; color:var(--peach-faint);
+}
+.fcard .meta a{ color:var(--terracotta); }
+.fcard .meta a:hover{ opacity:.7; }
+
+/* ------------------------------ finale ------------------------------ */
+.finale{
+  min-height:100vh; display:flex; align-items:center; justify-content:center;
+  text-align:center; padding:20vh var(--pad) 14vh;
+}
+.f-inner{ max-width:740px; }
+.finale h2{
+  font-family:var(--display); font-weight:300; font-size:clamp(3rem,7vw,5.6rem);
+  line-height:1.02; letter-spacing:-.01em;
+}
+.finale p{
+  margin-top:1.4rem; color:var(--peach-dim); font-size:clamp(1rem,1.4vw,1.15rem);
+  text-wrap:pretty;
+}
+.btn-cta{
+  display:inline-block; margin-top:2.6rem;
+  font-family:var(--mono); font-size:.8rem; letter-spacing:.1em; text-transform:lowercase;
+  color:var(--night); background:var(--peach); padding:16px 34px; border-radius:4px;
+  transition:background .16s ease, transform .12s ease;
+}
+.btn-cta:hover{ background:#e9bd94; }
+.btn-cta:active{ transform:translateY(1px); }
+
+/* ------------------------------ footer ------------------------------ */
+.ifoot{
+  position:relative; z-index:2; border-top:1px solid var(--line-soft);
+  background:rgba(15,10,6,.72);
+}
+.ifoot .wrap{
+  max-width:1320px; margin:0 auto; padding:34px var(--pad);
+  display:flex; flex-wrap:wrap; gap:14px 40px; justify-content:space-between;
+  font-family:var(--mono); font-size:.72rem; letter-spacing:.05em; color:var(--peach-faint);
+}
+.ifoot a{ color:var(--peach-dim); }
+.ifoot a:hover{ opacity:.7; }
+
+/* hero layout + headline variants (driven by Tweaks) */
+body.hero-center .ihero{ align-items:center; text-align:center; }
+body.hero-center .hero-inner{ display:flex; flex-direction:column; align-items:center; }
+body.hero-center .lede{ margin-left:auto; margin-right:auto; }
+body.alt-headline .ihero h1{ font-size:clamp(3rem,8.5vw,7.6rem); line-height:1.0; }
+
+/* ------------------------------ mobile ------------------------------ */
+@media (max-width:720px){
+  .ihead nav{ display:none; }
+  .fcard{ width:78vw; }
+  .moment{ height:95vh; }
+}

@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Live Data / The Tech — Aré Guḍi</title>
+  <meta name="description" content="The tech here is evidence, not decoration: Tempest weather, soil sensors over LoRaWAN, BirdNET, biochar, AI plant-health checks, and a drone roadmap." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/styles.css" />
+  <script src="https://unpkg.com/@phosphor-icons/web" defer></script>
+</head>
+<body>
+
+  <header class="site-head">
+    <div class="wrap">
+      <a class="brand" href="index.html"><b>Aré Guḍi</b><span class="kn">ಅರೆ ಗುಡಿ</span></a>
+      <button class="nav-toggle" aria-expanded="false" aria-label="Menu">Menu</button>
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="farm.html">The Farm</a>
+        <a href="tech.html" aria-current="page">Live Data</a>
+        <a href="innovators.html">For Innovators</a>
+        <a href="visit.html">Visit</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero-full" data-parallax="0.1">
+    <div class="bg"><img src="images/beekeeper-frames.jpg" alt="The farm beekeeper holds frames of honeycomb beside the hives" /></div>
+    <div class="wrap on-dark">
+      <span class="eyebrow reveal in">Live Data / The Tech</span>
+      <h1 class="reveal in">The tech here is <em>evidence</em>, not decoration.</h1>
+      <p class="lead reveal in">No stock-photo "smart farming." Every system below is a real instrument on real ground — and most of it is streaming live right now.</p>
+    </div>
+  </section>
+
+  <!-- LIVE-PROOF STRIP -->
+  <section class="live" data-live aria-label="Live from the farm">
+    <div class="wrap">
+      <div class="live-head">
+        <span class="live-dot" aria-hidden="true"></span>
+        <span class="label">Live from the farm</span>
+        <span class="stamp" data-stamp>connecting…</span>
+      </div>
+      <div class="live-grid">
+        <div class="live-cell">
+          <div class="k">Weather · Tempest</div>
+          <div class="v" data-weather-v>27.4°C</div>
+          <div class="s" data-weather-s>Cloudy · 12 mm today · 6 km/h wind</div>
+        </div>
+        <div class="live-cell">
+          <div class="k">Last bird · BirdNET</div>
+          <div class="v" data-bird-v>Malabar Whistling Thrush</div>
+          <div class="s" data-bird-s>heard this morning</div>
+        </div>
+        <div class="live-cell">
+          <div class="k">Sensors</div>
+          <div class="v" data-sensor-v>4/5 live</div>
+          <div class="s" data-sensor-s>soil 38% · latest reading</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SENSING -->
+  <section>
+    <div class="wrap">
+      <div class="reveal" style="margin-bottom:2.6rem; max-width:44ch;">
+        <span class="section-num">i.</span>
+        <span class="eyebrow plain" style="margin-top:1rem; display:block;">What's sensing</span>
+        <h2>The instruments on the ground.</h2>
+      </div>
+      <div class="cols-3">
+        <div class="card reveal">
+          <i class="ph ph-thermometer-simple ico"></i>
+          <h3>Tempest weather station</h3>
+          <p>Hyperlocal weather — our real spray-window and irrigation input.</p>
+          <div class="meta">streaming live</div>
+        </div>
+        <div class="card reveal d1">
+          <i class="ph ph-broadcast ico"></i>
+          <h3>Soil sensors + LoRaWAN</h3>
+          <p>Moisture and conditions across plots, long-range and low-power.</p>
+          <div class="meta">4 / 5 nodes live</div>
+        </div>
+        <div class="card reveal d2">
+          <i class="ph ph-bird ico"></i>
+          <h3>BirdNET acoustic monitoring</h3>
+          <p>Biodiversity tracked by ear — 20+ species and counting.</p>
+          <div class="meta">20+ species logged</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVE READINGS -->
+  <section>
+    <div class="wrap">
+      <div class="reveal" style="margin-bottom:2.2rem; max-width:48ch;">
+        <span class="eyebrow plain">Live readings</span>
+        <h2 style="margin-top:1rem;">Soil and sky, <em>right now</em>.</h2>
+        <p class="body-lead" style="margin-top:1.2rem;">Moisture, pH, and weather stream from the field nodes into one feed. Each value updates when the Pi pushes a reading; sample numbers show until the live feed connects.</p>
+      </div>
+      <div class="readings" aria-label="Live field readings">
+        <div class="live-cell"><div class="k">Soil moisture</div><div class="v" data-r-moist>38%</div><div class="s">root zone · plot 3</div></div>
+        <div class="live-cell"><div class="k">Soil pH</div><div class="v" data-r-ph>6.4</div><div class="s">6.2–6.8 target</div></div>
+        <div class="live-cell"><div class="k">Soil temp</div><div class="v" data-r-soiltemp>24.8°C</div><div class="s">−10 cm depth</div></div>
+        <div class="live-cell"><div class="k">Air temp</div><div class="v" data-r-airtemp>27.4°C</div><div class="s">Tempest station</div></div>
+        <div class="live-cell"><div class="k">Rain today</div><div class="v" data-r-rain>12 mm</div><div class="s">since 00:00 IST</div></div>
+        <div class="live-cell"><div class="k">Last bird · BirdNET</div><div class="v" data-bird-v style="font-size:clamp(1.2rem,2vw,1.6rem);">Malabar Whistling Thrush</div><div class="s" data-bird-s>heard this morning</div></div>
+      </div>
+      <p class="note" style="margin-top:1rem; display:flex; gap:.55rem; align-items:center;"><span class="live-dot" aria-hidden="true"></span> <span data-stamp>connecting…</span></p>
+      <figure class="figure reveal" style="margin-top:clamp(28px,4vw,52px); aspect-ratio:16/10;">
+        <img src="images/farm-tank-birds.jpg" alt="Egrets and herons around the farm tank with grazing buffalo and dense tree cover behind" />
+        <figcaption>The farm tank — egrets, herons and buffalo; the living soundscape BirdNET is learning · 2026 · Western Ghats</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- TRAIL CAMERA -->
+  <section class="band">
+    <div class="wrap">
+      <div class="reveal" style="margin-bottom:2.2rem; max-width:50ch;">
+        <span class="eyebrow plain">On the trail</span>
+        <h2 style="margin-top:1rem;">What the forest does when we're <em>not</em> looking.</h2>
+        <p class="body-lead" style="margin-top:1.2rem;">A motion-triggered wildlife camera is going in along the forest edge. The latest frame posts here automatically — but only when there's no person in it.</p>
+      </div>
+      <div class="trailcam reveal" data-trailcam>
+        <div class="tc-frame" data-tc-frame>
+          <div class="tc-img" data-tc-img></div>
+          <div class="tc-empty">
+            <i class="ph ph-camera"></i>
+            <div class="l1">Awaiting first frame</div>
+            <div class="l2">The camera goes live once the unit is installed and gated.</div>
+          </div>
+          <span class="tc-badge"><span class="live-dot" aria-hidden="true"></span> human-gated</span>
+        </div>
+        <div class="tc-meta">
+          <div class="tc-cap" data-tc-cap>No capture yet</div>
+          <div class="tc-note">Frames are filtered on-device. A capture is published only when detection finds <strong>no person</strong> — nothing identifying a visitor or the crew ever goes public. Species labels come from the same model family as BirdNET.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAKING -->
+  <section class="band">
+    <div class="wrap cols-2">
+      <div class="reveal">
+        <span class="section-num">ii.</span>
+        <span class="eyebrow plain" style="margin-top:1rem; display:block;">What we make on-site</span>
+        <h2>Closing the loop.</h2>
+        <p class="body-lead" style="margin-top:1.4rem;">Farm waste doesn't leave — it becomes fertility and carbon, made here in the open.</p>
+      </div>
+      <div class="reveal d1">
+        <ul class="flist">
+          <li><i class="ph ph-fire ico"></i><span class="t"><strong>Biochar</strong>200L retort, 6+ batches done, second barrel coming — carbon back into the soil.</span></li>
+          <li><i class="ph ph-stack ico"></i><span class="t"><strong>Biocompost</strong>30 piles across 4 batches; farm waste closed into fertility.</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- REAL PHOTOS: biochar + biocompost on the ground -->
+    <div class="wrap" style="margin-top:clamp(28px,4vw,52px);">
+      <div class="cols-3">
+        <figure class="figure reveal" style="aspect-ratio:4/5;">
+          <img src="images/biochar-retort.jpg" alt="The 200-litre biochar retort running on the farm, chimney venting under the areca canopy" />
+          <figcaption>Biochar retort, mid-burn · 2026 · Western Ghats</figcaption>
+        </figure>
+        <figure class="figure reveal d1" style="aspect-ratio:4/5;">
+          <img src="images/biocompost-truck.jpg" alt="A trailer-load of finished dark biocompost being delivered to the plots" />
+          <figcaption>Finished biocompost, to the rows · 2026 · Western Ghats</figcaption>
+        </figure>
+        <figure class="figure reveal d2" style="aspect-ratio:4/5;">
+          <img src="images/compost-thermometer.jpg" alt="A compost thermometer reading about 40°C, needle sitting in the ideal range, probed into a covered pile" />
+          <figcaption>Pile at ~40°C — the ideal band · 2026 · Western Ghats</figcaption>
+        </figure>
+      </div>
+      <p class="note" style="margin-top:1rem;">Tarped, batch-tracked, temperature-probed — the same loop that feeds the soil sensors a baseline.</p>
+    </div>
+  </section>
+
+  <!-- INTELLIGENCE -->
+  <section>
+    <div class="wrap cols-2">
+      <div class="reveal">
+        <span class="section-num">iii.</span>
+        <span class="eyebrow plain" style="margin-top:1rem; display:block;">What it adds up to</span>
+        <h2>Data that does <em>something</em>.</h2>
+        <p class="body-lead" style="margin-top:1.4rem;">The sensing layer feeds a working pipeline — not a dashboard for its own sake, but alerts and answers the people on the ground actually use.</p>
+      </div>
+      <div class="reveal d1">
+        <ul class="flist">
+          <li><i class="ph ph-cpu ico"></i><span class="t"><strong>Raspberry Pi + automation backbone</strong>Running the data flow on-site.</span></li>
+          <li><i class="ph ph-leaf ico"></i><span class="t"><strong>AI plant-health checks</strong>Photo → diagnosis → advice.</span></li>
+          <li><i class="ph ph-cloud-rain ico"></i><span class="t"><strong>Monsoon spray-window alerts</strong>Sent to the field team, bilingual.</span></li>
+          <li><i class="ph ph-shield-check ico"></i><span class="t"><strong>Regional disease alerts <em>(building)</em></strong>Early warnings for areca &amp; black pepper, synthesised for the Western Ghats.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHOTO BREAK -->
+  <figure class="photo-break" data-parallax="0.08">
+    <img src="images/pepper-tending-wide.jpg" alt="The crew tending pepper vines trained up the areca trunks" />
+    <figcaption>Tending the pepper, vine by vine · 2026 · Western Ghats</figcaption>
+  </figure>
+
+  <!-- ROADMAP -->
+  <section class="band">
+    <div class="wrap narrow reveal">
+      <span class="section-num">iv.</span>
+      <span class="eyebrow plain" style="margin-top:1rem; display:block;">Building next</span>
+      <h2 style="max-width:18ch;">The drone program.</h2>
+      <p class="lead" style="margin:1.2rem 0 2.4rem;">Four-layer plant-health sensing, phased honestly.</p>
+      <ol class="steps">
+        <li><strong>Visual walkthrough</strong><span class="t">On the ground today.</span></li>
+        <li><strong>Tablet-camera capture</strong><span class="t">Close-ups of suspect plants.</span></li>
+        <li><strong>Spectral camera</strong><span class="t">Early stress, before the eye can see it.</span></li>
+        <li><strong>Drone aerial</strong><span class="t">Beginner drone (Months 6–9), multispectral (Month 12+).</span></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section>
+    <div class="wrap narrow reveal" style="text-align:center;">
+      <h2 style="margin-inline:auto; max-width:20ch;">This is the ground ventures validate against.</h2>
+      <div class="btn-row" style="justify-content:center;">
+        <a class="btn btn-primary" href="innovators.html">For Innovators</a>
+        <a class="btn btn-ghost" href="visit.html">Request a Visit</a>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-foot">
+    <div class="wrap">
+      <div class="cols">
+        <div>
+          <a class="brand" href="index.html"><b>Aré Guḍi</b><span class="kn">ಅರೆ ಗುಡಿ</span></a>
+          <p style="margin-top:1.2rem; max-width:34ch;">A traditional farm wired for the future — the Western Ghats, Karnataka.</p>
+        </div>
+        <div>
+          <span class="eyebrow plain">Explore</span>
+          <div class="fcol">
+            <a href="farm.html">The Farm</a>
+            <a href="tech.html">Live Data / The Tech</a>
+            <a href="innovators.html">For Innovators</a>
+            <a href="visit.html">Visit / Apply</a>
+          </div>
+        </div>
+        <div>
+          <span class="eyebrow plain">Connect</span>
+          <div class="fcol">
+            <a href="mailto:kirangange@gmail.com">kirangange@gmail.com</a>
+            <a href="https://kirangange.com">kirangange.com</a>
+            <a href="https://globallaunchbase.com">Global Launch Base</a>
+          </div>
+        </div>
+      </div>
+      <small>© <span data-year>2026</span> Aré Guḍi Farms · Western Ghats, Karnataka, India · High-tech powered. Tradition rooted.</small>
+    </div>
+  </footer>
+
+  <script src="js/nav.js"></script>
+  <script src="js/site.js"></script>
+  <script src="js/live.js"></script>
+</body>
+</html>

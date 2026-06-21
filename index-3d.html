@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Aré Guḍi — The grove at dusk</title>
+  <meta name="description" content="Aré Guḍi, a 50-acre working farm and living lab in the Western Ghats. Areca, pepper, soil and signal — walk the grove at dusk." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="css/immersive.css" />
+<link id="gfont-Open-Sans" rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&amp;display=swap">
+</head>
+<body style="font-family: Georgia">
+
+  <canvas id="grove-canvas" aria-hidden="true"></canvas>
+  <div class="vignette" aria-hidden="true"></div>
+  <div class="fallback-bg" aria-hidden="true"><img src="images/areca-canopy-ground.jpg" alt="" /></div>
+
+  <header class="ihead">
+    <div class="wrap">
+      <a class="brand" href="index.html"><b>Aré Guḍi</b><span class="kn">ಅರೆ ಗುಡಿ</span></a>
+      <nav>
+        <a href="index-3d.html" aria-current="page">home</a>
+        <a href="farm.html">the farm</a>
+        <a href="tech.html">live data</a>
+        <a href="innovators.html">for innovators</a>
+        <a href="visit.html">visit</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="ihero" data-screen-label="Hero">
+      <div class="hero-inner">
+        <span class="eyebrow rise">Western Ghats · dusk</span>
+        <h1 class="rise" id="hero-title">Aré Guḍi</h1>
+        <span class="kn-big rise">ಅರೆ ಗುಡಿ</span>
+        <p class="lede rise">Fifty acres of working canopy in the Western Ghats — areca, pepper, soil, and signal.</p>
+        <span class="scroll-cue rise">scroll to enter the grove</span>
+      </div>
+    </section>
+
+    <!-- JOURNEY: the camera pushes into the grove -->
+    <section class="journey" data-screen-label="Journey">
+      <div class="moment">
+        <div class="m-inner">
+          <span class="m-meta">7 ac · planted rows</span>
+          <h3>3,000 areca palms</h3>
+          <p>Planted in rows that hold a canopy, not a monoculture.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="m-inner">
+          <span class="m-meta">inter-crop</span>
+          <h3>Pepper climbs every trunk</h3>
+          <p>Banana, jackfruit and cocoa fill the layers beneath.</p>
+        </div>
+      </div>
+      <div class="moment">
+        <div class="m-inner">
+          <span class="m-meta">tempest · lorawan · birdnet</span>
+          <h3>The ground is listening</h3>
+          <p>Weather, soil moisture and birdsong — recorded as it happens, across the plots.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- HORIZONTAL SHOWCASE -->
+    <section class="showcase" data-screen-label="Showcase">
+      <div class="s-head">
+        <span class="eyebrow">the work</span>
+        <h2>Six things, done for real.</h2>
+      </div>
+      <div class="track">
+        <article class="fcard">
+          <div class="ph"><img src="images/pepper-vine-trunk.jpg" alt="Pepper vine trained up an areca trunk" /></div>
+          <div class="tx">
+            <span class="num">01 · canopy farming</span>
+            <h3>Grown in layers</h3>
+            <p>Pepper trained up areca trunks; banana, jackfruit and cocoa beneath. A canopy that earns in layers.</p>
+            <div class="meta">3,000 palms · 7 ac</div>
+          </div>
+        </article>
+        <article class="fcard">
+          <div class="ph"><img src="images/soil-macro.jpg" alt="Dark tilled soil under the areca canopy" /></div>
+          <div class="tx">
+            <span class="num">02 · biochar</span>
+            <h3>Carbon, folded back in</h3>
+            <p>Pyrolysis trials on farm feedstock; the char goes back into the soil it came from.</p>
+            <div class="meta">200L retort · 1 operational</div>
+          </div>
+        </article>
+        <article class="fcard">
+          <div class="ph"><img src="images/seeds-hand.jpg" alt="A handful of seed mix held over tilled ground" /></div>
+          <div class="tx">
+            <span class="num">03 · biocompost</span>
+            <h3>Batch-tracked fertility</h3>
+            <p>Trichoderma-inoculated piles, tracked from start to spread. Farm waste becomes fertility on-site.</p>
+            <div class="meta">30 piles · 4 batches</div>
+          </div>
+        </article>
+        <article class="fcard">
+          <div class="ph"><img src="images/honey-macro.jpg" alt="Honeycomb frame heavy with capped honey" /></div>
+          <div class="tx">
+            <span class="num">04 · honey</span>
+            <h3>An apiary under areca</h3>
+            <p>Hive boxes stand among the palms; the frames come out heavy when the canopy flowers.</p>
+            <div class="meta">under-canopy hives</div>
+          </div>
+        </article>
+        <article class="fcard">
+          <div class="ph"><img src="images/areca-canopy-ground.jpg" alt="Areca palms rising over green undergrowth" /></div>
+          <div class="tx">
+            <span class="num">05 · live data</span>
+            <h3>Instrumented ground</h3>
+            <p>Tempest weather, soil sensors over LoRaWAN, BirdNET acoustics — 20+ species heard so far.</p>
+            <div class="meta">4/5 sensors live · <a href="tech.html">see live data →</a></div>
+          </div>
+        </article>
+        <article class="fcard">
+          <div class="ph"><img src="images/team-tractor-plank.jpg" alt="The farm crew guiding a tractor over a field channel" /></div>
+          <div class="tx">
+            <span class="num">06 · pilots</span>
+            <h3>Real ground for hard tech</h3>
+            <p>IoT, drone and irrigation pilots run on working fields — with the crew that farms them.</p>
+            <div class="meta">50+ acres · <a href="innovators.html">for innovators →</a></div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- FINALE -->
+    <section class="finale" data-screen-label="Finale">
+      <div class="f-inner">
+        <span class="eyebrow rise">for innovators</span>
+        <h2 class="rise">Prove it on real ground.</h2>
+        <p class="rise">If your hardware needs weather, soil, and a crew that shows up at dawn — bring it here.</p>
+        <a class="btn-cta rise" href="innovators.html" style="font-family: Palatino">apply via glb accelerator</a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="ifoot">
+    <div class="wrap">
+      <span>Aré Guḍi · Western Ghats, Karnataka</span>
+      <span><a href="farm.html">the farm</a> · <a href="tech.html">live data</a> · <a href="visit.html">visit</a></span>
+      <span>© 2026 Aré Guḍi</span>
+    </div>
+  </footer>
+
+  <script src="https://unpkg.com/three@0.149.0/build/three.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://unpkg.com/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+  <script src="js/grove-scene.js"></script>
+  <script src="js/immersive-scroll.js"></script>
+
+  <!-- Tweaks panel (design review only — strip before production deploy) -->
+  <script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+  <script type="text/babel" src="js/tweaks-panel.jsx"></script>
+  <script type="text/babel" src="js/home-tweaks.jsx"></script>
+
+</body>
+</html>

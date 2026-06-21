@@ -1,0 +1,30 @@
+{
+  "updated": "2026-05-29T08:40:00+05:30",
+  "weather": {
+    "temp_c": 27.4,
+    "condition": "Cloudy",
+    "rain_today_mm": 12.0,
+    "wind_kph": 6,
+    "humidity_pct": 88
+  },
+  "bird": {
+    "species": "Malabar Whistling Thrush",
+    "kannada": "",
+    "time": "2026-05-29T06:12:00+05:30"
+  },
+  "sensors": {
+    "online": 4,
+    "total": 5,
+    "soil_moist_pct": 38,
+    "soil_ph": 6.4,
+    "soil_temp_c": 24.8,
+    "last_soil_pct": 38,
+    "last_soil_time": "2026-05-29T08:30:00+05:30"
+  },
+  "trailcam": {
+    "image": "",
+    "label": "",
+    "time": "",
+    "has_human": false
+  }
+}

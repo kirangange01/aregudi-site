@@ -1,0 +1,27 @@
+# Netlify config — Aré Guḍi (Git-linked, static site + functions)
+[build]
+  publish = "."
+  command = ""
+
+# Serverless functions (Tempest weather + AQI + astronomy live feed)
+[functions]
+  directory = "netlify/functions"
+  node_bundler = "esbuild"
+
+# Clean path for the live conditions feed
+[[redirects]]
+  from = "/api/conditions"
+  to = "/.netlify/functions/conditions"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# Keep the live feed fresh (function sets its own cache too)
+[[headers]]
+  for = "/data/live.json"
+  [headers.values]
+    Cache-Control = "no-cache"

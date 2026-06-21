@@ -1,0 +1,5 @@
+# Pretty URLs (optional): /farm -> /farm.html etc.
+/farm        /farm.html        200
+/tech        /tech.html        200
+/innovators  /innovators.html  200
+/visit       /visit.html       200
