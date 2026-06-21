@@ -1,6 +1,6 @@
 // conditions.js — Netlify Function
-// Calls Tempest + Open-Meteo AQI + Open-Meteo forecast + NASA Dial-A-Moon
-// Returns unified JSON for the live conditions banner
+// Live current conditions (Tempest obs) + forecast (Tempest better_forecast,
+// Open-Meteo fallback) + AQI (Open-Meteo) + moon (NASA) + a Today/Tonight suggestion.
 
 const STATION_ID = '168737';
 
@@ -20,6 +20,14 @@ const PLANETS = {
   4:'Jupiter, W dusk',  5:'Saturn, SE pre-dawn', 6:'Saturn, SE midnight',
   7:'Saturn, S midnight',8:'Saturn, S evening',  9:'Saturn, SW evening',
   10:'Saturn, SW eve',  11:'Jupiter, E dusk',   12:'Jupiter, S evening',
+};
+
+// Seasonal note for the morning-walk suggestion (central Western Ghats)
+const MORNING_NOTE = {
+  monsoon:     "the Malabar Whistling Thrush is in full song, and balsams and wild ginger are out along the path",
+  postmonsoon: "sunbirds work the late blooms, and yellow sonki and balsam still colour the path",
+  cool:        "wintering flycatchers move through the canopy, and the mornings come up misty and still",
+  premonsoon:  "the koel and the brainfever bird call through the heat, and golden cassia is in flower",
 };
 
 function windLabel(deg){
@@ -50,8 +58,8 @@ function sprayWindow(rainMm,rainRate,windMs,hour){
   return{open:true,label:'Open · spray now'};
 }
 function nextShower(now){
-  const y=now.getFullYear();
-  const mmdd=String(now.getMonth()+1).padStart(2,'0')+'-'+String(now.getDate()).padStart(2,'0');
+  const y=now.getUTCFullYear();
+  const mmdd=String(now.getUTCMonth()+1).padStart(2,'0')+'-'+String(now.getUTCDate()).padStart(2,'0');
   for(const s of SHOWERS) if(s.peak>=mmdd) return`${s.name} · ${s.peak.replace('-',' ')} ${y}`;
   const f=SHOWERS[0]; return`${f.name} · ${f.peak.replace('-',' ')} ${y+1}`;
 }
@@ -67,12 +75,77 @@ function aqiCategory(v){
   if(v<=20)return'Good'; if(v<=40)return'Fair'; if(v<=60)return'Moderate';
   if(v<=80)return'Poor'; return'Very poor';
 }
-function fmt12(timeStr){
-  // "2026-06-21T06:12" -> "6:12 am"
-  try{
-    const t=new Date(timeStr); const h=t.getHours(); const m=String(t.getMinutes()).padStart(2,'0');
-    return h<12?`${h||12}:${m} am`:h===12?`12:${m} pm`:`${h-12}:${m} pm`;
-  }catch{return timeStr;}
+
+// --- time helpers (IST) ---
+function istParts(ms){
+  const d=new Date(ms+5.5*3600*1000);
+  return { y:d.getUTCFullYear(), mo:d.getUTCMonth()+1, day:d.getUTCDate(),
+           h:d.getUTCHours(), min:d.getUTCMinutes(), dateStr:d.toISOString().slice(0,10) };
+}
+function fmtISTfromMs(ms){
+  const p=istParts(ms); let h=p.h; const m=String(p.min).padStart(2,'0');
+  const ap=h<12?'am':'pm'; h=h%12||12; return `${h}:${m} ${ap}`;
+}
+function hourLabelIST(ms){
+  const h=istParts(ms).h;
+  return h===0?'12 am':h<12?`${h} am`:h===12?'noon':`${h-12} pm`;
+}
+
+// --- sky-state classification ---
+function classifySky(icon,cond){
+  const s=((icon||'')+' '+(cond||'')).toLowerCase();
+  if(/rain|thunder|sleet|snow|storm|drizzle/.test(s)) return 'wet';
+  if(/fog|mist|haz/.test(s)) return 'fog';
+  if(/partly/.test(s)) return 'partly';
+  if(/cloud|overcast/.test(s)) return 'cloudy';
+  if(/clear|sunny|fair/.test(s)) return 'clear';
+  return 'clear';
+}
+function skyFromWmo(c){
+  if(c==null) return 'clear';
+  if(c===0) return 'clear';
+  if(c<=2) return 'partly';
+  if(c===3) return 'cloudy';
+  if(c===45||c===48) return 'fog';
+  if(c>=51) return 'wet';
+  return 'clear';
+}
+function seasonOf(m){
+  if(m>=6&&m<=9) return 'monsoon';
+  if(m>=10&&m<=11) return 'postmonsoon';
+  if(m===12||m<=2) return 'cool';
+  return 'premonsoon';
+}
+
+// --- the Today / Tonight suggestion ---
+function makeSuggestion(o){
+  const {isDay,isMorning,sky,feels,uv,moonIllum,season,rainSoon}=o;
+  if(isDay){
+    if(rainSoon) return "Rain about — a day for sheltered jobs; let the plots drink.";
+    if(feels>=32 && uv>=8) return "Hot with strong sun — best to stay in the shade and out of the midday heat.";
+    if(isMorning && (sky==='clear'||sky==='partly') && feels<32)
+      return `A fine morning for a walk — ${MORNING_NOTE[season]||'listen for the season\u2019s birdsong and look for what\u2019s in bloom'}.`;
+    if(sky==='clear') return feels>=24
+      ? "Clear and bright — a fine day out in the fields."
+      : "Bright and mild — good weather for a walk through the grove.";
+    if(sky==='partly') return "Sun and cloud — comfortable hours for working outside.";
+    if(sky==='fog')    return "Mist in the canopy — a soft, slow morning on the farm.";
+    if(feels>=24) return "Soft cloud, warm air — easy working weather.";
+    if(feels<=20) return "Grey and cool — good cover for a long day's work.";
+    return "Soft cloud cover — comfortable working weather.";
+  }
+  // night
+  if(rainSoon) return "Rain moving in — a night for the porch and the sound of it on the roof.";
+  if(sky==='clear'){
+    if((moonIllum??0)>=70) return "Clear skies, bright moon — a fine night for a moonlit walk.";
+    if(feels>=24) return "Clear and warm — a night for dinner under the stars.";
+    return "Clear and dark — a great night for stargazing.";
+  }
+  if(sky==='partly') return "Breaks in the cloud — catch the stars between them.";
+  if(sky==='fog')    return "Mist settling in — a quiet, lantern-lit kind of night.";
+  if(feels<=20) return "Cloudy and cool — a good night for a campfire.";
+  if(feels>=24) return "Warm under the clouds — a good night for a barbecue.";
+  return "Soft cloud cover — a calm night for a slow evening.";
 }
 
 exports.handler = async function(){
@@ -85,7 +158,7 @@ exports.handler = async function(){
   if(!TOKEN) return{statusCode:500,headers:hdrs,body:JSON.stringify({error:'TEMPEST_TOKEN missing'})};
 
   try{
-    // --- 1. Tempest latest observation ---
+    // --- 1. Tempest current observation ---
     const tRes = await fetch(
       `https://swd.weatherflow.com/swd/rest/observations/station/${STATION_ID}?token=${TOKEN}`
     );
@@ -95,7 +168,6 @@ exports.handler = async function(){
     const lat   = tData.latitude  ?? tData.station_meta?.latitude  ?? 14.05;
     const lon   = tData.longitude ?? tData.station_meta?.longitude ?? 75.10;
 
-    // station-observations endpoint returns NAMED fields (not the obs_st array)
     const windAvg   = obs.wind_avg ?? 0;            // m/s
     const windGust  = obs.wind_gust ?? 0;
     const windDeg   = obs.wind_direction ?? 0;
@@ -108,73 +180,114 @@ exports.handler = async function(){
     const feelsLike = obs.feels_like ?? airTemp;
     const dewpoint  = obs.dew_point ?? 0;
 
-    // --- 2. Open-Meteo Air Quality ---
-    let aqi = null;
+    const nowMs = Date.now();
+    const todayStr = istParts(nowMs).dateStr;
+
+    // --- 2. Forecast: Tempest better_forecast (primary), Open-Meteo (fallback) ---
+    let sunrise='—', sunset='—', nextRainLabel='Low chance';
+    let sunriseMs=null, sunsetMs=null, skyState='clear', forecastSource='Tempest';
+
+    let bfOK=false;
     try{
-      const aqiRes = await fetch(
+      const bfRes=await fetch(
+        `https://swd.weatherflow.com/swd/rest/better_forecast?station_id=${STATION_ID}&token=${TOKEN}`
+      );
+      if(bfRes.ok){
+        const bf=await bfRes.json();
+        const day0=bf.forecast?.daily?.[0];
+        if(day0?.sunrise){ sunriseMs=day0.sunrise*1000; sunrise=fmtISTfromMs(sunriseMs); }
+        if(day0?.sunset){  sunsetMs =day0.sunset*1000;  sunset =fmtISTfromMs(sunsetMs); }
+        skyState=classifySky(bf.current_conditions?.icon, bf.current_conditions?.conditions);
+        const hourly=bf.forecast?.hourly||[];
+        for(const hr of hourly){
+          const ms=(hr.time||0)*1000;
+          if(ms>nowMs && (hr.precip_probability??0)>=50){
+            const prefix=istParts(ms).dateStr!==todayStr?'tmrw ':'';
+            nextRainLabel=`${prefix}~${hourLabelIST(ms)} · ${hr.precip_probability}%`;
+            break;
+          }
+        }
+        bfOK = (sunriseMs!=null || hourly.length>0);
+      }
+    }catch{}
+
+    if(!bfOK){
+      forecastSource='Open-Meteo';
+      try{
+        const fRes=await fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}`+
+          `&hourly=precipitation_probability&daily=sunrise,sunset&current=weather_code`+
+          `&timezone=Asia%2FKolkata&forecast_days=2`
+        );
+        if(fRes.ok){
+          const fd=await fRes.json();
+          if(fd.daily?.sunrise?.[0]){ sunriseMs=new Date(fd.daily.sunrise[0]+':00+05:30').getTime(); sunrise=fmtISTfromMs(sunriseMs); }
+          if(fd.daily?.sunset?.[0]){  sunsetMs =new Date(fd.daily.sunset[0]+':00+05:30').getTime();  sunset =fmtISTfromMs(sunsetMs); }
+          skyState=skyFromWmo(fd.current?.weather_code);
+          const probs=fd.hourly?.precipitation_probability||[];
+          const times=fd.hourly?.time||[];
+          for(let i=0;i<probs.length;i++){
+            const t=new Date(times[i]+':00+05:30');
+            if(t.getTime()>nowMs && probs[i]>=50){
+              const h=parseInt(times[i].slice(11,13),10);
+              const label=h===0?'12 am':h<12?`${h} am`:h===12?'noon':`${h-12} pm`;
+              const prefix=times[i].slice(0,10)!==todayStr?'tmrw ':'';
+              nextRainLabel=`${prefix}~${label} · ${probs[i]}%`;
+              break;
+            }
+          }
+        }
+      }catch{}
+    }
+
+    // --- 3. Open-Meteo Air Quality ---
+    let aqi=null;
+    try{
+      const aqiRes=await fetch(
         `https://air-quality-api.open-meteo.com/v1/air-quality?latitude=${lat}&longitude=${lon}&current=european_aqi&timezone=Asia%2FKolkata`
       );
       if(aqiRes.ok){ const d=await aqiRes.json(); aqi=d.current?.european_aqi??null; }
     }catch{}
 
-    // --- 3. Open-Meteo Forecast (rain prob + sunrise/sunset) ---
-    let sunrise='5:58 am', sunset='6:43 pm', nextRainLabel='Low chance';
-    try{
-      const fRes = await fetch(
-        `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}`+
-        `&hourly=precipitation_probability&daily=sunrise,sunset`+
-        `&timezone=Asia%2FKolkata&forecast_days=2`
-      );
-      if(fRes.ok){
-        const fd=await fRes.json();
-        if(fd.daily?.sunrise?.[0]) sunrise=fmt12(fd.daily.sunrise[0]);
-        if(fd.daily?.sunset?.[0])  sunset =fmt12(fd.daily.sunset[0]);
-        const probs=fd.hourly?.precipitation_probability||[];
-        const times=fd.hourly?.time||[];
-        const nowMs=Date.now();
-        for(let i=0;i<probs.length;i++){
-          const t=new Date(times[i]);
-          if(t.getTime()>nowMs&&probs[i]>=50){
-            const h=t.getHours();
-            const label=h<12?`${h} am`:h===12?'noon':`${h-12} pm`;
-            nextRainLabel=`~${label} · ${probs[i]}%`;
-            break;
-          }
-        }
-      }
-    }catch{}
-
     // --- 4. NASA Dial-A-Moon ---
     let moonImg=null, moonIllum=null, moonPhase='—';
     try{
-      const utcHour=new Date().toISOString().slice(0,13); // "2026-06-21T14"
+      const utcHour=new Date().toISOString().slice(0,13);
       const mRes=await fetch(`https://svs.gsfc.nasa.gov/api/dialamoon/${utcHour}:00`);
       if(mRes.ok){
         const md=await mRes.json();
         moonImg   = md.image?.url||null;
-        const frac= md.phase?.fraction_illuminated??0;
-        moonIllum = Math.round(frac*100);
-        const age = md.phase?.age_of_moon_days??15;
-        moonPhase = moonPhaseName(moonIllum, age<14.75);
+        moonIllum = Math.round(md.phase ?? 0);   // 'phase' is % illuminated
+        const age = md.age ?? 15;
+        moonPhase = moonPhaseName(moonIllum, age<14.76);
       }
     }catch{}
 
     // --- 5. Derived / computed ---
-    const nowIST  = new Date(Date.now()+(5.5*3600*1000));
-    const hour    = nowIST.getUTCHours();
-    const month   = nowIST.getUTCMonth()+1;
-    const spray   = sprayWindow(precipDay,rainRate,windAvg,hour);
-    const shower  = nextShower(nowIST);
-    const planet  = PLANETS[month]||'Saturn, check sky';
+    const p=istParts(nowMs);
+    const hour=p.h, month=p.mo;
+    const spray=sprayWindow(precipDay,rainRate,windAvg,hour);
+    const shower=nextShower(new Date(nowMs+5.5*3600*1000));
+    const planet=PLANETS[month]||'Saturn, check sky';
 
-    // Monsoon season-to-date deficit (Jun–Sep, ~1000mm normal over 120 days)
     let monsoonPct=null, monsoonStatus=null;
-    if(month>=6&&month<=9){
-      const dayOfSeason=(month-6)*30+nowIST.getUTCDate();
-      const expected=Math.round(dayOfSeason*8.3);
-      // Without historical actuals we label as below-normal per ground observation
-      monsoonPct=41; monsoonStatus='below normal';
+    if(month>=6&&month<=9){ monsoonPct=41; monsoonStatus='below normal'; }
+
+    // day/night + morning window
+    let isDay, isMorning=false;
+    if(sunriseMs!=null && sunsetMs!=null){
+      isDay = nowMs>=sunriseMs && nowMs<sunsetMs;
+      isMorning = isDay && nowMs < sunriseMs+3*3600*1000;
+    }else{
+      isDay = hour>=6 && hour<18;
+      isMorning = hour>=6 && hour<9;
     }
+
+    const rainSoon = skyState==='wet' || rainRate>0;
+    const suggestion = makeSuggestion({
+      isDay, isMorning, sky:skyState, feels:feelsLike, uv,
+      moonIllum, season:seasonOf(month), rainSoon,
+    });
 
     const body={
       updated: new Date().toISOString(),
@@ -205,20 +318,16 @@ exports.handler = async function(){
         monsoon_pct: monsoonPct,
         monsoon_status: monsoonStatus,
       },
-      aqi:{
-        value:    aqi,
-        category: aqiCategory(aqi),
-        source:   'Open-Meteo · regional',
-      },
-      moon:{
-        image_url:        moonImg,
-        illumination_pct: moonIllum,
-        phase:            moonPhase,
-      },
+      aqi:{ value:aqi, category:aqiCategory(aqi), source:'Open-Meteo · regional' },
+      moon:{ image_url:moonImg, illumination_pct:moonIllum, phase:moonPhase },
       sky:{
-        planet,
-        shower,
+        planet, shower,
+        state: skyState,
+        is_day: isDay,
+        suggestion,
+        suggestion_label: isDay?'Today':'Tonight',
       },
+      forecast_source: forecastSource,
     };
 
     return{statusCode:200, headers:hdrs, body:JSON.stringify(body)};

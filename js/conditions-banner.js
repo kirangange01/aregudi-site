@@ -72,7 +72,7 @@
     /* moon */
     if(d.moon.image_url){
       src('ag-moon-img', d.moon.image_url);
-      show('ag-moon-img'); hide('ag-moon-svg');
+      show('ag-moon-photo'); hide('ag-moon-svg');
     }
     set('ag-moon-phase', d.moon.phase||'—');
     set('ag-moon-illum', d.moon.illumination_pct!=null ? d.moon.illumination_pct+'% lit' : '');
@@ -80,6 +80,12 @@
     /* sky */
     set('ag-planet',  d.sky.planet);
     set('ag-shower',  d.sky.shower);
+
+    /* today / tonight suggestion */
+    var sg=document.getElementById('ag-suggest');
+    if(sg && d.sky && d.sky.suggestion){
+      sg.innerHTML='<b>'+(d.sky.suggestion_label||'Tonight')+' \u2014</b> '+d.sky.suggestion;
+    }
 
     /* stamp */
     set('ag-stamp', 'data '+new Date(d.updated).toLocaleTimeString('en-GB'));

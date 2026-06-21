@@ -52,7 +52,7 @@
     <div class="wrap">
       <div class="reveal" style="max-width:60ch;margin-bottom:2rem;">
         <span class="eyebrow plain">Live conditions &amp; what to plan for</span>
-        <h2 style="margin-top:.8rem;">Tempest station · Western Ghats</h2>
+        <h2 style="margin-top:.8rem;">The farm, right now</h2>
       </div>
       <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:1.6rem;">
         <!-- COMPASS -->
@@ -85,8 +85,10 @@
         </div>
         <!-- MOON -->
         <div style="flex:0 0 auto;text-align:center;min-width:100px;">
-          <img id="ag-moon-img" src="" alt="Current moon phase from NASA" width="86" height="86"
-               style="display:none;border-radius:50%;object-fit:cover;background:#363C56;" />
+          <span id="ag-moon-photo" style="display:none;width:86px;height:86px;border-radius:50%;overflow:hidden;margin:0 auto;">
+            <img id="ag-moon-img" src="" alt="Current moon phase"
+                 style="display:block;width:118%;height:118%;margin:-9% 0 0 -9%;object-fit:cover;" />
+          </span>
           <svg id="ag-moon-svg" viewBox="0 0 96 96" width="86" height="86" role="img" aria-label="Moon phase (fallback disc)">
             <path d="M48,8 A40,40 0 0,0 48,88 Z" fill="#F1EBDA"/>
             <path d="M48,8 A40,40 0 0,1 48,88 Z" fill="#363C56"/>
@@ -139,6 +141,7 @@
           <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:7px;color:#4b4b80;"><span>Moonrise</span><b>after 9 pm</b></div>
           <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:7px;color:#4b4b80;white-space:nowrap;gap:8px;"><span>Shower</span><b id="ag-shower" style="white-space:nowrap;">—</b></div>
           <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:7px;color:#4b4b80;"><span>AQI</span><b><span id="ag-aqi-val" class="ag-good">—</span> · <span id="ag-aqi-cat">—</span></b></div>
+          <div id="ag-suggest" style="margin-top:11px;font-size:12px;line-height:1.5;color:#3a3a66;border-top:0.5px solid rgba(95,95,147,.2);padding-top:9px;">—</div>
         </div>
       </div>
 
@@ -203,7 +206,7 @@
         <div class="card reveal d2">
           <i class="ph ph-broadcast ico"></i>
           <h3>Instrumented</h3>
-          <p>Tempest weather, soil sensors over LoRaWAN, and BirdNET acoustic monitoring — a live data baseline running across the plots.</p>
+          <p>Live weather, soil sensors over LoRaWAN, and BirdNET acoustic monitoring — a live data baseline running across the plots.</p>
           <div class="meta">20+ species · 4/5 sensors live</div>
         </div>
       </div>
