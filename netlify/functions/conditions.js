@@ -92,21 +92,21 @@ exports.handler = async function(){
     if(!tRes.ok) throw new Error(`Tempest HTTP ${tRes.status}`);
     const tData = await tRes.json();
     const obs   = tData.obs[0];
-    const lat   = tData.station_meta?.latitude  || 14.05;
-    const lon   = tData.station_meta?.longitude || 75.10;
+    const lat   = tData.latitude  ?? tData.station_meta?.latitude  ?? 14.05;
+    const lon   = tData.longitude ?? tData.station_meta?.longitude ?? 75.10;
 
-    // obs_st field layout
-    const windAvg   = obs[2]  || 0;   // m/s
-    const windGust  = obs[3]  || 0;
-    const windDeg   = obs[4]  || 0;
-    const pressure  = obs[6]  || 0;
-    const airTemp   = obs[7]  || 0;
-    const humidity  = obs[8]  || 0;
-    const uv        = obs[10] || 0;
-    const rainRate  = obs[12] || 0;   // mm/min
-    const precipDay = obs[18] || 0;   // local day mm
-    const feelsLike = obs[21] || airTemp;
-    const dewpoint  = obs[22] || 0;
+    // station-observations endpoint returns NAMED fields (not the obs_st array)
+    const windAvg   = obs.wind_avg ?? 0;            // m/s
+    const windGust  = obs.wind_gust ?? 0;
+    const windDeg   = obs.wind_direction ?? 0;
+    const pressure  = obs.sea_level_pressure ?? obs.barometric_pressure ?? obs.station_pressure ?? 0;
+    const airTemp   = obs.air_temperature ?? 0;
+    const humidity  = obs.relative_humidity ?? 0;
+    const uv        = obs.uv ?? 0;
+    const rainRate  = obs.precip ?? 0;              // mm in last minute
+    const precipDay = obs.precip_accum_local_day ?? 0;
+    const feelsLike = obs.feels_like ?? airTemp;
+    const dewpoint  = obs.dew_point ?? 0;
 
     // --- 2. Open-Meteo Air Quality ---
     let aqi = null;
