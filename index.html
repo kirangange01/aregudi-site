@@ -47,35 +47,115 @@
     </div>
   </section>
 
-  <!-- LIVE-PROOF STRIP (clean feature panel over hero base) -->
-  <section class="live live--feature" data-live aria-label="Live from the farm">
+  <!-- CONDITIONS BANNER -->
+  <section class="band" style="background:#F8F2E5;border-bottom:0.5px solid rgba(120,90,50,.18);">
     <div class="wrap">
-      <div class="panel">
-        <div class="live-head">
-          <span class="live-dot" aria-hidden="true"></span>
-          <span class="label">Live from the farm</span>
-          <span class="stamp" id="ag-h-stamp">connecting…</span>
+      <div class="reveal" style="max-width:60ch;margin-bottom:2rem;">
+        <span class="eyebrow plain">Live conditions &amp; what to plan for</span>
+        <h2 style="margin-top:.8rem;">Tempest station · Western Ghats</h2>
+      </div>
+      <div style="display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-bottom:1.6rem;">
+        <!-- COMPASS -->
+        <svg viewBox="0 0 160 160" width="120" height="120" role="img" aria-label="Wind compass" style="flex:0 0 auto;">
+          <circle cx="80" cy="80" r="66" fill="#fff" stroke="rgba(120,90,50,.18)"/>
+          <circle cx="80" cy="80" r="53" fill="none" stroke="rgba(120,90,50,.10)"/>
+          <text x="80" y="23" text-anchor="middle" font-size="12" fill="#7a6a52" font-weight="500" font-family="Georgia,serif">N</text>
+          <text x="143" y="84" text-anchor="middle" font-size="12" fill="#b3a288" font-family="Georgia,serif">E</text>
+          <text x="80" y="148" text-anchor="middle" font-size="12" fill="#b3a288" font-family="Georgia,serif">S</text>
+          <text x="18" y="84" text-anchor="middle" font-size="12" fill="#b3a288" font-family="Georgia,serif">W</text>
+          <g id="ag-needle" style="transform-origin:80px 80px;transition:transform .8s cubic-bezier(.2,.8,.2,1)">
+            <polygon points="80,26 73,82 87,82" fill="#2E4259"/>
+            <polygon points="80,134 73,82 87,82" fill="#cdbfa6"/>
+          </g>
+          <circle cx="80" cy="80" r="5.5" fill="#fff" stroke="#2E4259" stroke-width="2"/>
+        </svg>
+        <!-- WIND INFO -->
+        <div style="flex:1;min-width:130px;font-family:Georgia,serif;">
+          <div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9a8a72;">Wind</div>
+          <div style="margin-top:4px;">
+            <span id="ag-wind-dir" style="font-size:34px;color:#2c2014;line-height:1;">WSW</span>
+            <span id="ag-wind-deg" style="font-size:13px;color:#9a8a72;margin-left:6px;">—</span>
+          </div>
+          <div style="margin-top:8px;font-size:14px;color:#3a2a1c;">
+            <span id="ag-wind-spd" style="font-size:22px;font-family:Georgia,serif;">—</span> km/h
+            <span style="color:#9a8a72;"> · gust </span>
+            <b id="ag-wind-gust">—</b> km/h
+          </div>
+          <div id="ag-wind-bft" style="margin-top:6px;font-size:12.5px;color:#5d7a39;font-family:var(--body);">—</div>
         </div>
-        <div class="live-grid">
-          <div class="live-cell">
-            <div class="k">Weather · Tempest</div>
-            <div class="v" id="ag-h-temp">—</div>
-            <div class="s" id="ag-h-tsub">live from the station</div>
-          </div>
-          <div class="live-cell">
-            <div class="k">Wind</div>
-            <div class="v" id="ag-h-wind">—</div>
-            <div class="s" id="ag-h-wsub">direction &amp; speed</div>
-          </div>
-          <div class="live-cell">
-            <div class="k">Rain today</div>
-            <div class="v" id="ag-h-rain">—</div>
-            <div class="s" id="ag-h-rsub">spray window</div>
-          </div>
+        <!-- MOON -->
+        <div style="flex:0 0 auto;text-align:center;min-width:100px;">
+          <img id="ag-moon-img" src="" alt="Current moon phase from NASA" width="86" height="86"
+               style="display:none;border-radius:50%;object-fit:cover;background:#363C56;" />
+          <svg id="ag-moon-svg" viewBox="0 0 96 96" width="86" height="86" role="img" aria-label="Moon phase (fallback disc)">
+            <path d="M48,8 A40,40 0 0,0 48,88 Z" fill="#F1EBDA"/>
+            <path d="M48,8 A40,40 0 0,1 48,88 Z" fill="#363C56"/>
+            <ellipse cx="48" cy="48" rx="19.2" ry="40" fill="#F1EBDA"/>
+            <circle cx="34" cy="40" r="5" fill="#E4DCC6"/>
+            <circle cx="44" cy="62" r="3.4" fill="#E4DCC6"/>
+            <circle cx="30" cy="58" r="2.4" fill="#E4DCC6"/>
+            <circle cx="48" cy="48" r="40" fill="none" stroke="rgba(120,90,50,.22)"/>
+          </svg>
+          <div id="ag-moon-phase" style="font-family:Georgia,serif;font-size:13px;color:#2c2014;margin-top:4px;">—</div>
+          <div id="ag-moon-illum" style="font-size:11.5px;color:#9a8a72;">—</div>
         </div>
+      </div>
+
+      <!-- THREE PANELS -->
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;">
+        <!-- Rain & monsoon -->
+        <div style="background:#E9F1F6;border-radius:13px;padding:14px;">
+          <div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#5a7891;font-weight:500;">Rain &amp; monsoon</div>
+          <div style="margin-top:8px;color:#234a66;">
+            <span id="ag-rain-today" style="font-family:Georgia,serif;font-size:28px;line-height:1;">—</span>
+            <span id="ag-rain-sub" style="font-size:12.5px;color:#5a7891;margin-left:4px;">—</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:7px;color:#3f6580;"><span>Next rain</span><b id="ag-rain-next">—</b></div>
+          <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:7px;color:#3f6580;"><span>Season</span><b id="ag-monsoon" class="ag-bad">—</b></div>
+          <span id="ag-spray-pill" style="display:inline-block;font-size:11.5px;padding:4px 10px;border-radius:20px;margin-top:10px;font-weight:500;background:#DDEBC8;color:#3B6D11;">
+            <span id="ag-spray">—</span>
+          </span>
+        </div>
+        <!-- Comfort & work -->
+        <div style="background:#F4E7D2;border-radius:13px;padding:14px;">
+          <div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#9a7b45;font-weight:500;">Comfort &amp; work</div>
+          <div style="margin-top:8px;color:#6b4f1d;">
+            <span id="ag-feels" style="font-family:Georgia,serif;font-size:28px;line-height:1;">—</span>
+            <span style="font-size:12.5px;color:#9a7b45;margin-left:4px;">feels-like</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:7px;color:#7a5a28;"><span>Humidity</span><b id="ag-humidity">—</b></div>
+          <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:7px;color:#7a5a28;"><span>UV</span><b id="ag-uv">—</b></div>
+          <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:7px;color:#7a5a28;"><span>Sun</span><b id="ag-sun">—</b></div>
+          <span id="ag-work-pill" style="display:inline-block;font-size:11.5px;padding:4px 10px;border-radius:20px;margin-top:10px;font-weight:500;background:#DDEBC8;color:#3B6D11;">
+            <span id="ag-work">—</span>
+          </span>
+        </div>
+        <!-- Sky tonight -->
+        <div style="background:#E7E8F1;border-radius:13px;padding:14px;">
+          <div style="font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#5f5f93;font-weight:500;">Sky tonight</div>
+          <div style="margin-top:8px;color:#3a3a66;">
+            <span id="ag-planet" style="font-family:Georgia,serif;font-size:18px;line-height:1.3;">—</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:7px;color:#4b4b80;"><span>Moonrise</span><b>after 9 pm</b></div>
+          <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:7px;color:#4b4b80;white-space:nowrap;gap:8px;"><span>Shower</span><b id="ag-shower" style="white-space:nowrap;">—</b></div>
+          <div style="display:flex;justify-content:space-between;font-size:12.5px;margin-top:7px;color:#4b4b80;"><span>AQI</span><b><span id="ag-aqi-val" class="ag-good">—</span> · <span id="ag-aqi-cat">—</span></b></div>
+        </div>
+      </div>
+
+      <!-- FOOTER STRIP -->
+      <div style="display:flex;align-items:center;gap:8px;margin-top:16px;font-size:12px;color:#9a8a72;border-top:0.5px solid rgba(120,90,50,.14);padding-top:12px;">
+        <span class="live-dot" aria-hidden="true"></span>
+        <span id="ag-clock">—</span> IST · <span id="ag-stamp">connecting…</span>
       </div>
     </div>
   </section>
+  <style>
+    .ag-good{color:#3B6D11} .ag-warn{color:#7a5410} .ag-bad{color:#A32D2D}
+    #ag-work-pill.ag-good{background:#DDEBC8;color:#3B6D11}
+    #ag-work-pill.ag-warn{background:#F7E6C8;color:#7a5410}
+    #ag-spray-pill.ag-good{background:#DDEBC8;color:#3B6D11}
+    #ag-spray-pill.ag-warn{background:#F7E6C8;color:#7a5410}
+  </style>
 
   <!-- WHAT THIS IS -->
   <section>
