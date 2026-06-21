@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Aré Guḍi — High-tech powered. Tradition rooted.</title>
+  <link rel="icon" href="/favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#f2cdac" />
+
   <meta name="description" content="A working farm and living lab in the Western Ghats: rooted in Karnataka soil, instrumented with real IoT, built for high-tech pilots that need real ground beneath them." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -47,23 +54,23 @@
         <div class="live-head">
           <span class="live-dot" aria-hidden="true"></span>
           <span class="label">Live from the farm</span>
-          <span class="stamp" data-stamp>connecting…</span>
+          <span class="stamp" id="ag-h-stamp">connecting…</span>
         </div>
         <div class="live-grid">
           <div class="live-cell">
             <div class="k">Weather · Tempest</div>
-            <div class="v" data-weather-v>27.4°C</div>
-            <div class="s" data-weather-s>Cloudy · 12 mm today · 6 km/h wind</div>
+            <div class="v" id="ag-h-temp">—</div>
+            <div class="s" id="ag-h-tsub">live from the station</div>
           </div>
           <div class="live-cell">
-            <div class="k">Last bird · BirdNET</div>
-            <div class="v" data-bird-v>Malabar Whistling Thrush</div>
-            <div class="s" data-bird-s>heard this morning</div>
+            <div class="k">Wind</div>
+            <div class="v" id="ag-h-wind">—</div>
+            <div class="s" id="ag-h-wsub">direction &amp; speed</div>
           </div>
           <div class="live-cell">
-            <div class="k">Sensors</div>
-            <div class="v" data-sensor-v>4/5 live</div>
-            <div class="s" data-sensor-s>soil 38% · latest reading</div>
+            <div class="k">Rain today</div>
+            <div class="v" id="ag-h-rain">—</div>
+            <div class="s" id="ag-h-rsub">spray window</div>
           </div>
         </div>
       </div>
@@ -193,5 +200,6 @@
   <script src="js/nav.js"></script>
   <script src="js/site.js"></script>
   <script src="js/live.js"></script>
+  <script src="js/conditions-banner.js"></script>
 </body>
 </html>
