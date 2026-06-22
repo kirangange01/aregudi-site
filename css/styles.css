@@ -305,7 +305,7 @@ section{ padding-block:var(--sec); position:relative; }
 .landmap-section > .wrap{ position:relative; z-index:1; }
 
 /* watermark icon turns the small plain plots into designed tiles */
-.plot .ico-plot{ position:absolute; top:.7rem; right:.8rem; font-size:1.2rem; color:var(--stone); opacity:.42; z-index:1; line-height:1; }
+.plot .ico-plot{ position:absolute; top:.6rem; right:.6rem; font-size:1rem; color:var(--stone); opacity:.35; z-index:1; line-height:1; }
 .plot.green .ico-plot{ color:var(--forest); opacity:.5; }
 .plot.water .ico-plot{ color:#3f6b8a; opacity:.55; }
 .plot.clay .ico-plot{ color:var(--terracotta); opacity:.55; }
