@@ -122,7 +122,7 @@ section{ padding-block:var(--sec); position:relative; }
 .site-head .wrap{ display:flex; align-items:center; justify-content:space-between; height:72px; }
 .brand{ display:flex; align-items:baseline; gap:.65rem; line-height:1; flex-shrink:0; white-space:nowrap; }
 
-.brand-logo{ height:2rem; width:auto; display:inline-block; vertical-align:middle; }
+.brand-logo{ height:3.2rem; width:auto; display:inline-block; vertical-align:middle; }
 .brand b{ font-family:var(--display); font-weight:400; font-size:1.7rem; color:var(--brown); letter-spacing:.01em; }
 .brand .kn{ font-family:var(--kannada); font-size:.9rem; color:var(--stone); }
 .nav{ display:flex; gap:2.2rem; align-items:center; }
@@ -297,12 +297,19 @@ section{ padding-block:var(--sec); position:relative; }
 .plot.photo .pac .u{ color:rgba(253,250,243,.82); }
 .band .plot.photo{ background:var(--cream); }
 .plot.photo:hover{ border:0; }
-/* plot cards with subtle image tint (small cards) */
-.plot.tint{ position:relative; overflow:hidden; }
+/* plot cards with photo background + readable scrim (small cards) */
+.plot.tint{ position:relative; overflow:hidden; border:0; }
 .plot.tint::before{ content:""; position:absolute; inset:0; z-index:0;
-  background-image:var(--img); background-size:cover; background-position:center; opacity:.18; transition:opacity .4s ease; }
-.plot.tint:hover::before{ opacity:.28; }
-.plot.tint > *{ position:relative; z-index:1; }
+  background-image:var(--img); background-size:cover; background-position:center; transform:scale(1.001); transition:transform .9s ease; }
+.plot.tint::after{ content:""; position:absolute; inset:0; z-index:1;
+  background:linear-gradient(to top, rgba(20,12,5,.82) 0%, rgba(20,12,5,.45) 40%, rgba(20,12,5,.28) 100%); }
+.plot.tint:hover::before{ transform:scale(1.06); }
+.plot.tint > *{ position:relative; z-index:2; }
+.plot.tint .pname{ color:#fff !important; text-shadow:0 1px 12px rgba(15,9,3,.75); }
+.plot.tint .pmeta{ color:rgba(253,250,243,.9) !important; text-shadow:0 1px 10px rgba(15,9,3,.8); }
+.plot.tint .pac{ color:#fff !important; text-shadow:0 1px 14px rgba(15,9,3,.8); }
+.plot.tint .pac .u{ color:rgba(253,250,243,.85) !important; }
+.plot.tint .ico-plot{ color:rgba(253,250,243,.7) !important; opacity:.8 !important; text-shadow:0 1px 8px rgba(15,9,3,.6); }
 
 /* land-map section sits on real canopy — atmosphere, not a flat band */
 .landmap-section{ position:relative; overflow:hidden; }
@@ -352,7 +359,7 @@ section{ padding-block:var(--sec); position:relative; }
 .site-foot a:hover{ opacity:.64; }
 .site-foot .cols{ display:grid; grid-template-columns:1.7fr 1fr 1fr; gap:2.6rem; }
 .site-foot 
-.brand-logo{ height:2rem; width:auto; display:inline-block; vertical-align:middle; }
+.brand-logo{ height:3.2rem; width:auto; display:inline-block; vertical-align:middle; }
 .brand b{ color:var(--brown); }
 .site-foot .brand .kn{ color:var(--stone); }
 .site-foot p{ color:var(--charcoal); }
