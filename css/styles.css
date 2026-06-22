@@ -288,7 +288,7 @@ section{ padding-block:var(--sec); position:relative; }
 .plot.photo::before{ content:""; position:absolute; inset:0; z-index:0;
   background-image:var(--img); background-size:cover; background-position:center; transform:scale(1.001); transition:transform .9s ease; }
 .plot.photo::after{ content:""; position:absolute; inset:0; z-index:1;
-  background:linear-gradient(to top, rgba(20,12,5,.78) 0%, rgba(20,12,5,.42) 46%, rgba(20,12,5,.22) 100%); }
+  background:linear-gradient(to top, rgba(20,12,5,.62) 0%, rgba(20,12,5,.28) 42%, rgba(20,12,5,.12) 100%); }
 .plot.photo:hover::before{ transform:scale(1.06); }
 .plot.photo > *{ position:relative; z-index:2; }
 .plot.photo .pname{ color:#fff; text-shadow:0 1px 14px rgba(15,9,3,.6); }
@@ -305,11 +305,11 @@ section{ padding-block:var(--sec); position:relative; }
   background:linear-gradient(to top, rgba(20,12,5,.82) 0%, rgba(20,12,5,.45) 40%, rgba(20,12,5,.28) 100%); }
 .plot.tint:hover::before{ transform:scale(1.06); }
 .plot.tint > *{ position:relative; z-index:2; }
-.plot.tint .pname{ color:#fff !important; text-shadow:0 1px 12px rgba(15,9,3,.75); }
+.plot.tint .pname{ color:#fff !important; text-shadow:0 1px 12px rgba(15,9,3,.75); font-size:.86rem; padding-right:0 !important; }
 .plot.tint .pmeta{ color:rgba(253,250,243,.9) !important; text-shadow:0 1px 10px rgba(15,9,3,.8); }
 .plot.tint .pac{ color:#fff !important; text-shadow:0 1px 14px rgba(15,9,3,.8); }
 .plot.tint .pac .u{ color:rgba(253,250,243,.85) !important; }
-.plot.tint .ico-plot{ color:rgba(253,250,243,.7) !important; opacity:.8 !important; text-shadow:0 1px 8px rgba(15,9,3,.6); }
+.plot.tint .ico-plot{ display:none; }
 
 /* land-map section sits on real canopy — atmosphere, not a flat band */
 .landmap-section{ position:relative; overflow:hidden; }
