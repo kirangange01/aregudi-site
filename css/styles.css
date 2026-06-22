@@ -305,7 +305,7 @@ section{ padding-block:var(--sec); position:relative; }
   background:linear-gradient(to top, rgba(20,12,5,.82) 0%, rgba(20,12,5,.45) 40%, rgba(20,12,5,.28) 100%); }
 .plot.tint:hover::before{ transform:scale(1.06); }
 .plot.tint > *{ position:relative; z-index:2; }
-.plot.tint .pname{ color:#fff !important; text-shadow:0 1px 12px rgba(15,9,3,.75); font-size:.86rem; padding-right:0 !important; }
+.plot.tint .pname{ color:#fff !important; text-shadow:0 1px 12px rgba(15,9,3,.75); font-size:.86rem; padding-right:0 !important; overflow-wrap:anywhere; word-break:break-word; }
 .plot.tint .pmeta{ color:rgba(253,250,243,.9) !important; text-shadow:0 1px 10px rgba(15,9,3,.8); }
 .plot.tint .pac{ color:#fff !important; text-shadow:0 1px 14px rgba(15,9,3,.8); }
 .plot.tint .pac .u{ color:rgba(253,250,243,.85) !important; }
