@@ -121,6 +121,8 @@ section{ padding-block:var(--sec); position:relative; }
 }
 .site-head .wrap{ display:flex; align-items:center; justify-content:space-between; height:72px; }
 .brand{ display:flex; align-items:baseline; gap:.65rem; line-height:1; flex-shrink:0; white-space:nowrap; }
+
+.brand-logo{ height:2rem; width:auto; display:inline-block; vertical-align:middle; }
 .brand b{ font-family:var(--display); font-weight:400; font-size:1.7rem; color:var(--brown); letter-spacing:.01em; }
 .brand .kn{ font-family:var(--kannada); font-size:.9rem; color:var(--stone); }
 .nav{ display:flex; gap:2.2rem; align-items:center; }
@@ -295,6 +297,12 @@ section{ padding-block:var(--sec); position:relative; }
 .plot.photo .pac .u{ color:rgba(253,250,243,.82); }
 .band .plot.photo{ background:var(--cream); }
 .plot.photo:hover{ border:0; }
+/* plot cards with subtle image tint (small cards) */
+.plot.tint{ position:relative; overflow:hidden; }
+.plot.tint::before{ content:""; position:absolute; inset:0; z-index:0;
+  background-image:var(--img); background-size:cover; background-position:center; opacity:.18; transition:opacity .4s ease; }
+.plot.tint:hover::before{ opacity:.28; }
+.plot.tint > *{ position:relative; z-index:1; }
 
 /* land-map section sits on real canopy — atmosphere, not a flat band */
 .landmap-section{ position:relative; overflow:hidden; }
@@ -343,7 +351,9 @@ section{ padding-block:var(--sec); position:relative; }
 .site-foot a{ color:var(--charcoal); border-bottom:1px solid transparent; transition:opacity .15s ease; }
 .site-foot a:hover{ opacity:.64; }
 .site-foot .cols{ display:grid; grid-template-columns:1.7fr 1fr 1fr; gap:2.6rem; }
-.site-foot .brand b{ color:var(--brown); }
+.site-foot 
+.brand-logo{ height:2rem; width:auto; display:inline-block; vertical-align:middle; }
+.brand b{ color:var(--brown); }
 .site-foot .brand .kn{ color:var(--stone); }
 .site-foot p{ color:var(--charcoal); }
 .site-foot .eyebrow{ color:var(--stone); margin-bottom:1.2rem; }
