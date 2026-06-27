@@ -148,6 +148,26 @@ function makeSuggestion(o){
   return "Soft cloud cover — a calm night for a slow evening.";
 }
 
+// ERA5 climatological monthly rainfall normals (1991-2020) at the station, in mm.
+// Computed once via monsoon-normal-dryrun.js (Open-Meteo archive / ERA5).
+// ERA5 under-reads absolute Ghats rainfall, but the live season-to-date actual is
+// sourced from the same model, so the departure RATIO stays valid.
+const MONSOON_NORMALS = { 6:206, 7:262, 8:188, 9:123 };
+
+// IMD-style rainfall departure bands -> friendly label for the card.
+function monsoonBandWord(pct){
+  if(pct >= 20) return pct >= 60 ? 'Well above normal' : 'Above normal';
+  if(pct >= -19) return 'Normal';
+  if(pct >= -59) return 'Below normal';
+  if(pct >= -99) return 'Well below normal';
+  return 'No rain';
+}
+function monsoonBandColor(word){
+  if(word==='Normal' || word==='Above normal' || word==='Well above normal') return 'good';
+  if(word==='Below normal') return 'warn';
+  return 'bad';
+}
+
 exports.handler = async function(){
   const TOKEN = process.env.TEMPEST_TOKEN;
   const hdrs = {
@@ -270,13 +290,47 @@ exports.handler = async function(){
     const shower=nextShower(new Date(nowMs+5.5*3600*1000));
     const planet=PLANETS[month]||'Saturn, check sky';
 
-    // monsoonPct requires cumulative rainfall since June 1 — not available from Tempest API alone.
-    // Tempest provides only today's precip_accum_local_day, no historical daily log.
-    // TODO: when daily rainfall is persisted (n8n -> DB, APMC, or Tempest API webhook archive),
-    // calculate: pct = (cumulative_mm_to_date / expected_normal_to_date) * 100
-    let monsoonPct=null;
-    let monsoonNote=null;
-    if(month>=6&&month<=9) monsoonNote='SW monsoon active · on time';
+    // --- Monsoon progress: live season-to-date rainfall vs ERA5 climatological normal ---
+    // Actual: Jun 1 -> today, summed from Open-Meteo (forecast past_days). Normal: prorated
+    // from the ERA5 1991-2020 monthly normals above. Both come from the same model family,
+    // so the wet/dry bias cancels in the ratio (vital in the Ghats). The card shows the band
+    // word only; monsoon_departure_pct is kept for debugging, not displayed.
+    let monsoonBand=null, monsoonBandCls=null, monsoonDeparture=null, monsoonNote=null;
+    if(month>=6 && month<=9){
+      monsoonNote='SW monsoon active · on time';
+      try{
+        const jun1=`${p.y}-06-01`;
+        const todayMD=`${p.y}-${String(month).padStart(2,'0')}-${String(p.day).padStart(2,'0')}`;
+        const sinceJun1=Math.floor((nowMs - Date.UTC(p.y,5,1))/86400000)+1;
+        const pastDays=Math.min(sinceJun1+2, 92);
+        const mRes=await fetch(
+          `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}`+
+          `&daily=precipitation_sum&past_days=${pastDays}&forecast_days=1&timezone=Asia%2FKolkata`
+        );
+        if(mRes.ok){
+          const md=await mRes.json();
+          const mTimes=md.daily?.time||[], mPrecip=md.daily?.precipitation_sum||[];
+          // only trust the figure if the series actually reaches back to June 1
+          if(mTimes.length>0 && mTimes[0]<=jun1){
+            let actual=0;
+            for(let i=0;i<mTimes.length;i++){
+              if(mTimes[i]>=jun1 && mTimes[i]<=todayMD) actual+=(mPrecip[i]??0);
+            }
+            const daysInMonth=new Date(p.y, month, 0).getDate();
+            let normal=0;
+            for(let m=6;m<month;m++) normal+=(MONSOON_NORMALS[m]||0);
+            normal+=(MONSOON_NORMALS[month]||0)*(p.day/daysInMonth);
+            if(normal>0){
+              monsoonDeparture=Math.round((actual-normal)/normal*100);
+              monsoonBand=monsoonBandWord(monsoonDeparture);
+              monsoonBandCls=monsoonBandColor(monsoonBand);
+            }
+          }
+          // else (e.g. late Sep: past_days capped at 92 before reaching Jun 1) -> leave band
+          // null, card shows '—'. TODO: add an Open-Meteo archive call for full-season span.
+        }
+      }catch{}
+    }
 
     // day/night + morning window
     let isDay, isMorning=false;
@@ -320,8 +374,10 @@ exports.handler = async function(){
         rate_mmph:   Math.round(rainRate*60*10)/10,
         next_rain:   nextRainLabel,
         spray:       spray,
-        monsoon_pct: monsoonPct,
-        monsoon_note: monsoonNote,
+        monsoon_band:          monsoonBand,
+        monsoon_band_class:    monsoonBandCls,
+        monsoon_departure_pct: monsoonDeparture,
+        monsoon_note:          monsoonNote,
       },
       aqi:{ value:aqi, category:aqiCategory(aqi), source:'Open-Meteo · regional' },
       moon:{ image_url:moonImg, illumination_pct:moonIllum, phase:moonPhase },
