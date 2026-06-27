@@ -72,12 +72,20 @@
     set('ag-rain-today', d.rain.today_mm+' mm');
     set('ag-rain-sub',   d.rain.today_mm>0?'rain today':'dry today');
     set('ag-rain-next',  d.rain.next_rain);
-    if(d.rain.monsoon_pct!==null){
-      set('ag-monsoon', '↓ '+d.rain.monsoon_pct+'% of normal');
-      cls('ag-monsoon', 'ag-bad');
+    if(d.rain.monsoon_pct!=null){
+      var mp = d.rain.monsoon_pct;            // 100 = exactly the normal-to-date
+      var arrow = mp > 105 ? '\u2191 ' : (mp < 95 ? '\u2193 ' : '\u2192 ');
+      var band  = mp >= 90 ? 'ag-good' : (mp >= 75 ? 'ag-warn' : 'ag-bad');
+      set('ag-monsoon', arrow + mp + '% of normal');
+      cls('ag-monsoon', band);
     }
-    set('ag-spray',  d.rain.spray.label);
-    cls('ag-spray-pill', sprayColor(d.rain.spray.open));
+    /* one-line monsoon status — live override; keeps the baked-in IMD line if the feed omits it */
+    set('ag-monsoon-note', d.rain.monsoon_note);
+    /* spray status is an internal field-ops signal — only render where a pill exists */
+    if(d.rain.spray){
+      set('ag-spray',  d.rain.spray.label);
+      cls('ag-spray-pill', sprayColor(d.rain.spray.open));
+    }
 
     /* AQI */
     set('ag-aqi-val', d.aqi.value!==null ? d.aqi.value : '—');
